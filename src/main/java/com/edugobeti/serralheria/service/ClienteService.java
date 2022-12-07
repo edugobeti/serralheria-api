@@ -21,8 +21,8 @@ public class ClienteService {
 		return obj.orElse(null);
 	}
 	
-	public void salvar(List<Cliente> listaCliente) {
-		repo.saveAll(listaCliente);
+	public void salvar(Cliente cliente) {
+		repo.save(cliente);
 	}
 	
 	public List<Cliente> listar(){
