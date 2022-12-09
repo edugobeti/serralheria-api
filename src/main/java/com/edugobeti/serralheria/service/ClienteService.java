@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.edugobeti.serralheria.domain.Cliente;
 import com.edugobeti.serralheria.domain.dto.ClienteDTO;
 import com.edugobeti.serralheria.repository.ClienteRepository;
+import com.edugobeti.serralheria.service.exception.ObjectNotFoundException;
 
 import lombok.AllArgsConstructor;
 
@@ -21,7 +22,7 @@ public class ClienteService {
 	@Transactional(readOnly = true)
 	public Cliente buscar(Integer id) {
 		Optional<Cliente> obj = repo.findById(id);
-		return obj.orElse(null);
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Cliente não encontrado"));
 	}
 	
 	@Transactional(readOnly = true)

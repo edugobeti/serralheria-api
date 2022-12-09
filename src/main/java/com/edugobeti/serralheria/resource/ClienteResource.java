@@ -1,5 +1,6 @@
 package com.edugobeti.serralheria.resource;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.edugobeti.serralheria.domain.Cliente;
 import com.edugobeti.serralheria.domain.dto.ClienteDTO;
@@ -37,22 +39,24 @@ public class ClienteResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> salvar(@RequestBody Cliente cliente){
+	public ResponseEntity<Void> salvar(@RequestBody Cliente cliente){
 		service.salvar(cliente);
-		return ResponseEntity.ok().build();
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+				.path("/{id}").buildAndExpand(cliente.getId()).toUri();
+		return ResponseEntity.created(uri).build();
 	}
 	
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<?> atualizar(@PathVariable Integer id, @RequestBody ClienteDTO clienteDTO){
 		clienteDTO.setId(id);
 		service.atualizar(clienteDTO);
-		return ResponseEntity.ok().build();
+		return ResponseEntity.noContent().build();
 	}
 	
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> deletar (@PathVariable Integer id){
 		service.deletar(id);
-		return ResponseEntity.ok().build();
+		return ResponseEntity.noContent().build();
 	}
 
 }
