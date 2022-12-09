@@ -7,11 +7,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.edugobeti.serralheria.domain.Cliente;
+import com.edugobeti.serralheria.domain.dto.ClienteDTO;
 import com.edugobeti.serralheria.service.ClienteService;
 
 @RestController
@@ -36,6 +38,13 @@ public class ClienteResource {
 	@PostMapping
 	public ResponseEntity<?> salvar(@RequestBody Cliente cliente){
 		service.salvar(cliente);
+		return ResponseEntity.ok().build();
+	}
+	
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<?> atualizar(@PathVariable Integer id, @RequestBody ClienteDTO clienteDTO){
+		clienteDTO.setId(id);
+		service.atualizar(clienteDTO);
 		return ResponseEntity.ok().build();
 	}
 
