@@ -68,17 +68,21 @@ public class DemoApplication implements CommandLineRunner {
 				, OffsetDateTime.now()
 				, OffsetDateTime.parse("2022-12-15T12:21:56Z")
 				, 300.0, 1, 6990.0, cli2, null, enderecoEntrega1 );
+		Pedido ped3 = new Pedido(null
+				, OffsetDateTime.now()
+				, OffsetDateTime.parse("2022-12-15T12:21:56Z")
+				, 300.0, 1, 6990.0, cli2, null, enderecoEntrega1 );
 		
 		cli1.setEnderecos(Arrays.asList(enderecoEntrega1));
 		cli1.setPedidos(Arrays.asList(ped1));
 		cli2.setEnderecos(Arrays.asList(enderecoEntrega2));
-		cli2.setPedidos(Arrays.asList(ped2));
+		cli2.setPedidos(Arrays.asList(ped2, ped3));
 		
 		clienteRepo.saveAll(Arrays.asList(cli1, cli2));
 		estadoRepo.save(e1);
 		cidadeRepo.saveAll(Arrays.asList(c1, c2));
 		enderecoRepo.saveAll(Arrays.asList(enderecoEntrega1, enderecoEntrega2));
-		pedidoRepo.saveAll(Arrays.asList(ped1, ped2));
+		pedidoRepo.saveAll(Arrays.asList(ped1, ped2, ped3));
 
 		
 		

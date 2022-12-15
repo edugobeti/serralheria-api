@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.edugobeti.serralheria.domain.Pedido;
 import com.edugobeti.serralheria.repository.PedidoRepository;
@@ -16,11 +17,13 @@ public class PedidoService {
 	@Autowired
 	PedidoRepository repo;
 	
+	@Transactional(readOnly = true)
 	public Pedido buscar(Integer id) {
 		Optional<Pedido> pedido = repo.findById(id);
 		return pedido.orElseThrow(() -> new ObjectNotFoundException("Pedido não encontrado"));
 	}
 	
+	@Transactional(readOnly = true)
 	public List<Pedido> listar(){
 		List<Pedido> list = repo.findAll();
 		return list;
