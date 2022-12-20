@@ -6,11 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.edugobeti.serralheria.domain.Cliente;
 import com.edugobeti.serralheria.domain.Endereco;
-import com.edugobeti.serralheria.domain.Pagamento;
 import com.edugobeti.serralheria.domain.Pedido;
 import com.edugobeti.serralheria.domain.Portao;
+import com.edugobeti.serralheria.domain.enuns.EstadoPagamento;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,9 +26,11 @@ public class PedidoDTO implements Serializable{
 	private Integer quantidade;
 	private Double total;
 	
-	private Cliente cliente;
+	private Integer clienteId;
 
-	private Pagamento pagamento;
+	private String estadoPagamento;
+	
+	private String formaPagamento;
 	
 	private Endereco enderecoEntrega;
 
@@ -42,8 +43,9 @@ public class PedidoDTO implements Serializable{
 		desconto = pedido.getDesconto();
 		quantidade = pedido.getQuantidade();
 		total = pedido.getTotal();
-		cliente = pedido.getCliente();
-		pagamento = pedido.getPagamento();
+		clienteId = pedido.getCliente().getId();
+		estadoPagamento = pedido.getPagamento().getEstado().toString();
+		formaPagamento = pedido.getPagamento().getForma().toString();
 		enderecoEntrega = pedido.getEnderecoEntrega();
 		portoes.stream().map(p -> pedido.getPortoes().add(p)).collect(Collectors.toList());
 	}

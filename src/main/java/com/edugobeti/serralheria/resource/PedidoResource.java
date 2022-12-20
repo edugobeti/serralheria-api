@@ -1,7 +1,7 @@
 package com.edugobeti.serralheria.resource;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -39,13 +39,7 @@ public class PedidoResource {
 	@GetMapping(value = "/clientes/{id}")
 	public ResponseEntity<?> listarPedidos(@PathVariable Integer id){
 		clienteService.buscar(id);
-		List<PedidoDTO> listPedido = new ArrayList<>();
 		List<PedidoDTO> list = service.listar();
-		for(PedidoDTO pedido : list) {
-			if(pedido.getCliente().getId().equals(id)) {
-				listPedido.add(pedido) ;
-			}
-		}
-		return ResponseEntity.ok().body(listPedido);
+		return ResponseEntity.ok().body(list.stream().filter(x -> x.getClienteId().equals(id)).collect(Collectors.toList()));
 	}
 }
