@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.edugobeti.serralheria.domain.Cliente;
 import com.edugobeti.serralheria.domain.dto.ClienteDTO;
 import com.edugobeti.serralheria.service.ClienteService;
 
@@ -27,19 +26,19 @@ public class ClienteResource {
 	private ClienteService service;
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<?> buscar(@PathVariable Integer id){
-		Cliente obj = service.buscar(id);
+	public ResponseEntity<ClienteDTO> buscar(@PathVariable Integer id){
+		ClienteDTO obj = service.buscar(id);
 		return ResponseEntity.ok().body(obj);
 	}
 	
 	@GetMapping
-	public ResponseEntity<?> listar(){
-		List<Cliente> list = service.listar();
+	public ResponseEntity<List<ClienteDTO>> listar(){
+		List<ClienteDTO> list = service.listar();
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@PostMapping
-	public ResponseEntity<Void> salvar(@RequestBody Cliente cliente){
+	public ResponseEntity<Void> salvar(@RequestBody ClienteDTO cliente){
 		service.salvar(cliente);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(cliente.getId()).toUri();
@@ -47,7 +46,7 @@ public class ClienteResource {
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<?> atualizar(@PathVariable Integer id, @RequestBody ClienteDTO clienteDTO){
+	public ResponseEntity<Void> atualizar(@PathVariable Integer id, @RequestBody ClienteDTO clienteDTO){
 		clienteDTO.setId(id);
 		service.atualizar(clienteDTO);
 		return ResponseEntity.noContent().build();

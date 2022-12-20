@@ -40,7 +40,7 @@ public class Pedido implements Serializable{
 	private OffsetDateTime dataVenda;
 	private OffsetDateTime dataInstalacao;
 	private Double desconto;
-	private Integer qunatidade;
+	private Integer quantidade;
 	private Double total;
 	
 	@JsonIgnore
@@ -59,13 +59,13 @@ public class Pedido implements Serializable{
 	private List<Portao> portoes = new ArrayList<>();
 
 	public Pedido(Integer id, OffsetDateTime dataVenda, OffsetDateTime dataInstalacao, Double desconto,
-			Integer qunatidade, Double total, Cliente cliente, Pagamento pagamento, Endereco enderecoEntrega) {
+			Integer quantidade, Double total, Cliente cliente, Pagamento pagamento, Endereco enderecoEntrega) {
 		super();
 		this.id = id;
 		this.dataVenda = dataVenda;
 		this.dataInstalacao = dataInstalacao;
 		this.desconto = desconto;
-		this.qunatidade = qunatidade;
+		this.quantidade = quantidade;
 		this.total = total;
 		this.cliente = cliente;
 		this.pagamento = pagamento;

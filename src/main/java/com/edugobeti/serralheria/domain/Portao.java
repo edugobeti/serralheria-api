@@ -1,5 +1,6 @@
 package com.edugobeti.serralheria.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,8 +24,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-public class Portao {
-
+public class Portao implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	@EqualsAndHashCode.Include
 	@Id
 	private Integer id;

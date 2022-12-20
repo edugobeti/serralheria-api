@@ -1,63 +1,45 @@
 package com.edugobeti.serralheria.domain.dto;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import java.util.stream.Collectors;
 
 import com.edugobeti.serralheria.domain.Cliente;
+import com.edugobeti.serralheria.domain.Endereco;
+import com.edugobeti.serralheria.domain.Pedido;
 import com.edugobeti.serralheria.domain.enuns.TipoCliente;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.EqualsAndHashCode.Include;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class ClienteDTO {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Include
 	private Integer id;
-	
-	@NotBlank
-	@Size(max = 50)
 	private String nome;
-	
-	@NotBlank
-	@Email
 	private String email;
-	
-	@NotBlank
 	private String cpf_cnpj;
+	
+	private TipoCliente tipo;
 	
 	private Set<String> telefones = new HashSet<>();
 	
-	@NotNull
-	private TipoCliente tipo;
+	private List<Endereco> enderecos = new ArrayList<>();
 	
+	private List<Pedido> pedidos = new ArrayList<>();
+
 	public ClienteDTO(Cliente cliente) {
 		id = cliente.getId();
 		nome = cliente.getNome();
 		email = cliente.getEmail();
 		cpf_cnpj = cliente.getCpf_cnpj();
-		for(String fone : telefones) {
-			telefones.add(fone);
-		}
-		
+		tipo = cliente.getTipo();
+		telefones.stream().map(tel -> cliente.getTelefones().add(tel)).collect(Collectors.toList());
+		enderecos.stream().map(end -> cliente.getEnderecos().add(end)).collect(Collectors.toList());
+		pedidos.stream().map(ped -> cliente.getPedidos().add(ped)).collect(Collectors.toList());
 	}
 
 }

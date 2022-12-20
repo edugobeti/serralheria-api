@@ -2,6 +2,7 @@ package com.edugobeti.serralheria.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,30 +21,31 @@ public class ClienteService {
 	private ClienteRepository repo;
 	
 	@Transactional(readOnly = true)
-	public Cliente buscar(Integer id) {
+	public ClienteDTO buscar(Integer id) {
 		Optional<Cliente> obj = repo.findById(id);
-		return obj.orElseThrow(() -> new ObjectNotFoundException("Cliente não encontrado"));
+		return new ClienteDTO(obj.orElseThrow(() -> new ObjectNotFoundException("Cliente não encontrado")));
 	}
 	
 	@Transactional(readOnly = true)
-	public List<Cliente> listar(){
+	public List<ClienteDTO> listar(){
 		List<Cliente> list = repo.findAll(); 
-		return list ;
+		return list.stream().map(x -> new ClienteDTO(x)).collect(Collectors.toList()) ;
 	}
 	
 	@Transactional
-	public void salvar(Cliente cliente) {
+	public void salvar(ClienteDTO clienteDTO) {
+		Cliente cliente = deDTO(clienteDTO);
 		repo.save(cliente);
 	}
 	
 	@Transactional
-	public Cliente atualizar(ClienteDTO clienteDTO) {
+	public ClienteDTO atualizar(ClienteDTO clienteDTO) {
 		Cliente cli = repo.findById(clienteDTO.getId()).get();
 		if(cli.getId() == clienteDTO.getId()) {
 			cli = deDTO(clienteDTO);
 			repo.save(cli);
 		}	
-		return cli;
+		return new ClienteDTO(cli);
 	}
 	
 	@Transactional

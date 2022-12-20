@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.edugobeti.serralheria.domain.Pedido;
+import com.edugobeti.serralheria.domain.dto.PedidoDTO;
 import com.edugobeti.serralheria.service.ClienteService;
 import com.edugobeti.serralheria.service.PedidoService;
 
@@ -26,22 +26,22 @@ public class PedidoResource {
 	
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<?> buscarPedido(@PathVariable Integer id){
-		Pedido ped = service.buscar(id);
+		PedidoDTO ped = service.buscar(id);
 		return ResponseEntity.ok().body(ped);
 	}
 	
 	@GetMapping
 	public ResponseEntity<?> listarPedido(){
-		List<Pedido> list = service.listar();
+		List<PedidoDTO> list = service.listar();
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@GetMapping(value = "/clientes/{id}")
 	public ResponseEntity<?> listarPedidos(@PathVariable Integer id){
 		clienteService.buscar(id);
-		List<Pedido> listPedido = new ArrayList<>();
-		List<Pedido> list = service.listar();
-		for(Pedido pedido : list) {
+		List<PedidoDTO> listPedido = new ArrayList<>();
+		List<PedidoDTO> list = service.listar();
+		for(PedidoDTO pedido : list) {
 			if(pedido.getCliente().getId().equals(id)) {
 				listPedido.add(pedido) ;
 			}
