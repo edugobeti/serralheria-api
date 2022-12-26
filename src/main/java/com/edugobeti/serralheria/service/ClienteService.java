@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.edugobeti.serralheria.domain.Cliente;
 import com.edugobeti.serralheria.domain.dto.ClienteDTO;
 import com.edugobeti.serralheria.repository.ClienteRepository;
+import com.edugobeti.serralheria.service.exception.DataIntegrityException;
 import com.edugobeti.serralheria.service.exception.ObjectNotFoundException;
 
 import lombok.AllArgsConstructor;
@@ -48,9 +50,15 @@ public class ClienteService {
 		return new ClienteDTO(cli);
 	}
 	
-	@Transactional
 	public void deletar(Integer id) {
-		repo.deleteById(id);
+		buscar(id);
+		try{
+			repo.deleteById(id);
+		}
+		catch(DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Cliente com pedidos associados não pode ser excluído");
+		}
+		
 	}
 	
 	private Cliente deDTO(ClienteDTO dto) {

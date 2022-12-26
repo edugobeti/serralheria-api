@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 import com.edugobeti.serralheria.domain.Endereco;
 import com.edugobeti.serralheria.domain.Pedido;
 import com.edugobeti.serralheria.domain.Portao;
-import com.edugobeti.serralheria.domain.enuns.EstadoPagamento;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
