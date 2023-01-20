@@ -27,9 +27,9 @@ public class PedidoDTO implements Serializable{
 	
 	private Integer clienteId;
 
-	private String estadoPagamento;
+	private Integer estadoPagamento;
 	
-	private String formaPagamento;
+	private Integer formaPagamento;
 	
 	private Endereco enderecoEntrega;
 
@@ -43,9 +43,10 @@ public class PedidoDTO implements Serializable{
 		quantidade = pedido.getQuantidade();
 		total = pedido.getTotal();
 		clienteId = pedido.getCliente().getId();
-		estadoPagamento = pedido.getPagamento().getEstado().toString();
-		formaPagamento = pedido.getPagamento().getForma().toString();
+		estadoPagamento = pedido.getPagamento().getEstado().getCodigo();
+		formaPagamento = pedido.getPagamento().getForma().getCodigo();
 		enderecoEntrega = pedido.getEnderecoEntrega();
-		portoes.stream().map(p -> pedido.getPortoes().add(p)).collect(Collectors.toList());
+		portoes.stream().map(p -> pedido.getPortoes().add(p)).collect(Collectors.toList());	
+	
 	}
 }
