@@ -103,7 +103,7 @@ public class DemoApplication implements CommandLineRunner {
 		cidadeRepo.saveAll(Arrays.asList(c1, c2));
 		enderecoRepo.saveAll(Arrays.asList(enderecoEntrega1, enderecoEntrega2));
 		pagamentoRepo.saveAll(Arrays.asList(pgto1, pgto2, pgto3, pgto4));
-		pedidoRepo.saveAll(Arrays.asList(ped1, ped2, ped3));
+		pedidoRepo.saveAll(Arrays.asList(ped1, ped2, ped3, ped4));
 		
 		
 		

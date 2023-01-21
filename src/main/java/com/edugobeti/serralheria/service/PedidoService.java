@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +18,7 @@ import com.edugobeti.serralheria.domain.enuns.FormaPagamento;
 import com.edugobeti.serralheria.repository.ClienteRepository;
 import com.edugobeti.serralheria.repository.PagamentoRepository;
 import com.edugobeti.serralheria.repository.PedidoRepository;
+import com.edugobeti.serralheria.service.exception.DataIntegrityException;
 import com.edugobeti.serralheria.service.exception.ObjectNotFoundException;
 
 @Service
@@ -48,6 +50,16 @@ public class PedidoService {
 		Pedido pedido = deDto(dto);
 		pagamentoRepository.save(pedido.getPagamento());
 		repo.save(pedido);	
+	}
+	
+	public void deletar(Integer id) {
+		buscar(id);
+		try{
+			repo.deleteById(id);
+		}
+		catch(DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Cliente com pedidos associados não pode ser excluído");
+		}
 	}
 	
 	public Pedido deDto(PedidoDTO dto) {
